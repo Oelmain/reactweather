@@ -1,41 +1,54 @@
 import "./CurrentWeather.css";
 
-const CurrentWeather = () => {
-    return (
-        <div className="weather">
-            <div className="top">
-                <div>
-                    <p className="city">Dubai</p>
-                    <p className="weather-description">Sunny</p>
-                </div>
-                <img alt="weather" className="weather-icon" src="icons/01d.png" />
-            </div>
-            <div className="bottom">
-                <p className="temperature">18°C</p>
-                <div className="details">
-                    <div className="parameter-row">
-                        <span className="parameter-label">Details</span>
-                    </div>
-                    <div className="parameter-row">
-                        <span className="parameter-label">Feels like</span>
-                        <span className="parameter-value">22°C</span>
+const CurrentWeather = ({ data }) => {
 
-                    </div>
-                    <div className="parameter-row">
-                        <span className="parameter-label">Wind</span>
-                        <span className="parameter-value">2 m/s</span>
-
-                    </div>
-                    <div className="parameter-row">
-                        <span className="parameter-label">Humidity</span>
-                        <span className="parameter-value">15%</span>
-
-                    </div>
+  if (!data) {
+    return <div>Data is not available</div>;
+  }
 
 
-                </div>
-            </div>
+  if (!data.weather || !data.weather[0]) {
+    return <div>Weather information is not available</div>;
+  }
+
+
+  const { city, main, weather, wind } = data;
+
+  return (
+    <div className="weather">
+      <div className="top">
+        <div>
+          <p className="city">{city}</p>
+          <p className="weather-description">{weather[0].description}</p>
         </div>
-    );
-}
+        <img alt="weather" className="weather-icon" src={`${weather[0].icon}.png`} />
+      </div>
+      <div className="bottom">
+        <p className="temperature">{Math.round(main.temp)}°C</p>
+        <div className="details">
+          <div className="parameter-row">
+            <span className="parameter-label">Details</span>
+          </div>
+          <div className="parameter-row">
+            <span className="parameter-label">Feels like</span>
+            <span className="parameter-value">{Math.round(main.feels_like)}°C</span>
+          </div>
+          <div className="parameter-row">
+            <span className="parameter-label">Wind</span>
+            <span className="parameter-value">{wind ? `${wind.speed} m/s` : 'N/A'}</span>
+          </div>
+          <div className="parameter-row">
+            <span className="parameter-label">Humidity</span>
+            <span className="parameter-value">{main ? `${main.humidity}%` : 'N/A'}</span>
+          </div>
+          <div className="parameter-row">
+            <span className="parameter-label">Pressure</span>
+            <span className="parameter-value">{main ? `${main.pressure} hPa` : 'N/A'}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
 export default CurrentWeather;
