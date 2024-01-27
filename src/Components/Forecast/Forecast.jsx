@@ -2,6 +2,7 @@ import React from 'react';
 import { Accordion, AccordionItem, AccordionItemHeading, AccordionItemPanel, AccordionItemButton } from 'react-accessible-accordion';
 
 const WEEK_DAYS = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
+const ABSOLUTE_ZERO = 273.15;
 
 const Forecast = ({ data }) => {
     const dayInAWeek = new Date().getDay();
@@ -20,7 +21,7 @@ const Forecast = ({ data }) => {
                                     <img src={`icons/${item.weather[0].icon}.png`} className="icon-small" alt="weather" />
                                     <label className="day">{forecastDays[idx]}</label>
                                     <label className="description">{item.weather[0].description}</label>
-                                    <label className="min-max">{Math.round(item.main.temp_max)}°C /{Math.round(item.main.temp_min)}°C</label>
+                                    <label className="min-max">{Math.round(item.main.temp_max-ABSOLUTE_ZERO)}°C /{Math.round(item.main.temp_min-ABSOLUTE_ZERO)}°C</label>
                                 </div>
                             </AccordionItemButton>
                         </AccordionItemHeading>
@@ -48,7 +49,7 @@ const Forecast = ({ data }) => {
                                 </div>
                                 <div className="daily-details-grid-item">
                                     <label>Feels like:</label>
-                                    <label>{item.main.feels_like}°C</label>
+                                    <label>{item.main.feels_like-ABSOLUTE_ZERO}°C</label>
                                 </div>
                             </div>
                         </AccordionItemPanel>
