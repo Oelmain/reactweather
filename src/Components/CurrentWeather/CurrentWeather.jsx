@@ -1,5 +1,7 @@
 import "./CurrentWeather.css";
 
+const ABSOLUTE_ZERO = 273.15;
+
 const CurrentWeather = ({ data }) => {
 
   if (!data) {
@@ -24,14 +26,14 @@ const CurrentWeather = ({ data }) => {
         <img alt="weather" className="weather-icon" src={`${weather[0].icon}.png`} />
       </div>
       <div className="bottom">
-        <p className="temperature">{Math.round(main.temp)}°C</p>
+        <p className="temperature">{Math.round(main.temp-ABSOLUTE_ZERO)}°C</p>
         <div className="details">
           <div className="parameter-row">
             <span className="parameter-label">Details</span>
           </div>
           <div className="parameter-row">
             <span className="parameter-label">Feels like</span>
-            <span className="parameter-value">{Math.round(main.feels_like)}°C</span>
+            <span className="parameter-value">{Math.round(main.feels_like-ABSOLUTE_ZERO)}°C</span>
           </div>
           <div className="parameter-row">
             <span className="parameter-label">Wind</span>

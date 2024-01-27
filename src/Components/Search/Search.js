@@ -1,13 +1,14 @@
 import React, { useState } from "react";
 import { AsyncPaginate } from "react-select-async-paginate";
 import {GEO_API_URL ,geoApioptions } from '../../api';
+
 const Search = ({ onSearchChange }) => {
   const [search, setSearch] = useState(null);
 
   const loadOptions = async (inputValue) => {
     try {
       const response = await fetch(
-        `${GEO_API_URL}'https://wft-geo-db.p.rapidapi.com/v1/geo/cities?minPopulation=1000000'=${inputValue}`,
+        `${GEO_API_URL}/cities?namePrefix=${inputValue}`,
         geoApioptions
       );
   
@@ -33,13 +34,13 @@ const Search = ({ onSearchChange }) => {
     console.log("Selected Data:", searchData);
 
     setSearch(searchData);
-    onSearchChange(searchData.value);
+    onSearchChange(searchData);
   };
 
   return (
     <AsyncPaginate
       placeholder="Search for city"
-      debounceTimeout={600}
+      debounceTimeout={1100}
       value={search}
       onChange={handleOnchange}
       loadOptions={loadOptions}
